@@ -1,0 +1,42 @@
+#parent {
+  height: 100%;
+  position: relative;
+}
+
+.children {
+  display: block;
+  margin: auto 10px;
+}
+
+h2 {
+  display: block;
+  font-size: 2em;
+  margin-top: 0.67em;
+  margin-bottom: 0.67em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+
+.textinput {
+  margin: 10px;
+  display: block;
+  width: 200px;
+}
+
+.subchild {
+  display: flex;
+}
+
+.label {
+  margin-top: 10px;
+}
+
+button {
+  margin: 10px;
+}
+
+.preview {
+  margin: 10px;
+  float: right;
+}
