@@ -9,13 +9,18 @@
   position: absolute;
 }
 
+.footerGroup {
+  position: relative;
+  height: 100px;
+}
+
 #sendAll {
   height: 50px;
   width: 100px;
   border-radius: 10%;
   position: absolute;
   margin: 10px;
-  left: 20%;
+  left: 10px;
   font-size: 14px;
   background-color: antiquewhite;
   cursor: grab;
