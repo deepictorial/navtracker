@@ -92,3 +92,19 @@ h2 {
   margin-top: -48px;
   transform: scale(0.8);
 }
+
+.leftblok {
+  background-color: darkgray;
+  width: fit-content;
+  transform: scale(1.4);
+}
+
+.amt {
+  color: darkred;
+  font-weight: bold;
+}
+
+.grayvalue {
+  font-weight: bold;
+  color: darkblue;
+}
