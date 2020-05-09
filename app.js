@@ -6,7 +6,7 @@
 //   ]
 // }
 
-var postData = {navs:[{}]};
+var postData = {navs:[]};
 
 async function loadUrls() {
   var id, date, nav;
@@ -19,7 +19,7 @@ async function loadUrls() {
     title.className = 'title';
     title.innerHTML = nav.friendly_name;
     createSubchildren(nav.url).then((subchildrenData) => {
-      var btn = createButtons(nav.url);
+      var btn = createButtons(nav);
       child.append(title);
       child.append(subchildrenData[0].preview);
       child.append(subchildrenData[0].subchild1);
@@ -35,16 +35,19 @@ function addToPostData(subchildrenData, nav) {
   postData.navs.push({id: nav.id, date: subchildrenData[1], nav: subchildrenData[2]});
 }
 
-function createButtons(navUrl) {
+function createButtons(nav) {
   var btn = document.createElement('div');
   btn.className = 'btns';
   var urlBtn = document.createElement('button');
   urlBtn.className = 'urlBtn';
   urlBtn.innerHTML = 'Open NAV';
-  urlBtn.onclick = function() { loadUrl(navUrl) };
+  urlBtn.onclick = function() { loadUrl(nav.url) };
   var submitBtn = document.createElement('button');
+  submitBtn.id = nav.id;
   submitBtn.className = 'submitBtn';
   submitBtn.innerHTML = 'Send Data';
+  submitBtn.onclick = function() { sendOne(nav.id) };
+
   btn.append(urlBtn);
   btn.append(submitBtn);
   return btn;
@@ -139,16 +142,25 @@ async function sendAll() {
 	  console.warn('Something went wrong.', err);
     document.getElementById('sendAll').style.backgroundColor = 'red';
   });
-
-  let result = await response.json();
 }
 
-function addToData(dataSet, id, newDate, newPrice) {
-  for (var i = 0; i < dataSet.length; i++) {
-    if (dataSet[i].id === id) {
-      dataSet[i].date = newDate;
-      dataSet[i].nav = newPrice;
-    }
-  }
-  return dataSet;
+async function sendOne(id) {
+  console.log("clicked send one");
+  //var dataRow = postData.navs.filter()
+  // let response = await fetch('https://1n9dgddt95.execute-api.us-west-2.amazonaws.com/prod/record', {
+  // method: 'POST',
+  // headers: {
+  //   'Content-Type': 'application/json;charset=utf-8'
+  // },
+  //   body: JSON.stringify(postData)
+  // }).then(function (response) {
+  //   if(response.status === 200) {
+  //     document.getElementById('sendAll').style.backgroundColor = 'green';
+  //   } else if(response.status > 399){
+  //     document.getElementById('sendAll').style.backgroundColor = 'red';
+  //   }
+  // }).catch(function (err) {
+	//   console.warn('Something went wrong.', err);
+  //   document.getElementById('sendAll').style.backgroundColor = 'red';
+  // });
 }
