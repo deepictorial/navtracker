@@ -18,7 +18,7 @@ async function loadUrls() {
     var title = document.createElement('h2');
     title.className = 'title';
     title.innerHTML = nav.friendly_name;
-    createSubchildren(nav.url).then((subchildrenData) => {
+    createSubchildren(nav).then((subchildrenData) => {
       var btn = createButtons(nav);
       child.append(title);
       child.append(subchildrenData[0].preview);
@@ -43,7 +43,7 @@ function createButtons(nav) {
   urlBtn.innerHTML = 'Open NAV';
   urlBtn.onclick = function() { loadUrl(nav.url) };
   var submitBtn = document.createElement('button');
-  submitBtn.id = nav.id;
+  submitBtn.id = 'submitBtn'+nav.id;
   submitBtn.className = 'submitBtn';
   submitBtn.innerHTML = 'Send Data';
   submitBtn.onclick = function() { sendOne(nav.id) };
@@ -53,8 +53,8 @@ function createButtons(nav) {
   return btn;
 }
 
-async function createSubchildren(navUrl) {
-  const data = await requestNavSite(navUrl);
+async function createSubchildren(nav) {
+  const data = await requestNavSite(nav.url);
   var parser = new DOMParser();
   var doc = parser.parseFromString(data, "text/html");
   var dateOf = doc.querySelector('.grayvalue').innerHTML;
@@ -77,6 +77,7 @@ async function createSubchildren(navUrl) {
   label1.for = 'text1';
   label1.innerHTML = "Date: ";
   var text1 = document.createElement('input');
+  text1.id = 'text1'+nav.id;
   text1.className = 'textinput';
   text1.type = "text";
   text1.value = dateOf;
@@ -90,6 +91,7 @@ async function createSubchildren(navUrl) {
   label2.for = 'text2';
   label2.innerHTML = "Price: ";
   var text2 = document.createElement('input');
+  text2.id = 'text2'+nav.id;
   text2.className = 'textinput';
   text2.type = "text2";
   text2.value = price;
@@ -145,22 +147,26 @@ async function sendAll() {
 }
 
 async function sendOne(id) {
-  console.log("clicked send one");
-  //var dataRow = postData.navs.filter()
-  // let response = await fetch('https://1n9dgddt95.execute-api.us-west-2.amazonaws.com/prod/record', {
-  // method: 'POST',
-  // headers: {
-  //   'Content-Type': 'application/json;charset=utf-8'
-  // },
-  //   body: JSON.stringify(postData)
-  // }).then(function (response) {
-  //   if(response.status === 200) {
-  //     document.getElementById('sendAll').style.backgroundColor = 'green';
-  //   } else if(response.status > 399){
-  //     document.getElementById('sendAll').style.backgroundColor = 'red';
-  //   }
-  // }).catch(function (err) {
-	//   console.warn('Something went wrong.', err);
-  //   document.getElementById('sendAll').style.backgroundColor = 'red';
-  // });
+  var oneDate = document.getElementById('text1'+id).value;
+  var onePrice = document.getElementById('text2'+id).value;
+  var oneData = {navs:[]};
+
+  oneData.navs.push({id: id, date: oneDate, nav: onePrice});
+
+  let response = await fetch('https://1n9dgddt95.execute-api.us-west-2.amazonaws.com/prod/record', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json;charset=utf-8'
+  },
+    body: JSON.stringify(oneData)
+  }).then(function (response) {
+    if(response.status === 200) {
+      document.getElementById('submitBtn'+id).style.backgroundColor = 'green';
+    } else if(response.status > 399){
+      document.getElementById('submitBtn'+id).style.backgroundColor = 'red';
+    }
+  }).catch(function (err) {
+	  console.warn('Something went wrong.', err);
+    document.getElementById('submitBtn'+id).style.backgroundColor = 'red';
+  });
 }
