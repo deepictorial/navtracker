@@ -1,19 +1,45 @@
+.headerGroup {
+  height: 100px;
+  position: relative;
+}
+
+.headerTitle {
+  margin: 10px;
+  width: 50%;
+  position: absolute;
+}
+
+#sendAll {
+  height: 50px;
+  width: 100px;
+  border-radius: 10%;
+  position: absolute;
+  margin: 10px;
+  left: 20%;
+  font-size: 14px;
+  background-color: antiquewhite;
+  cursor: grab;
+}
+
 #parent {
+  background-color: antiquewhite;
   height: 100%;
   position: relative;
 }
 
 .children {
-  display: block;
+  border: 1px solid gray;
+  position: relative;
   margin: auto 10px;
+  display: flow-root;
 }
 
 h2 {
   display: block;
   font-size: 2em;
   margin-top: 0.67em;
-  margin-bottom: 0.67em;
-  margin-left: 0;
+  margin-bottom: 1em;
+  margin-left: 1em;
   margin-right: 0;
   font-weight: bold;
 }
@@ -21,22 +47,43 @@ h2 {
 .textinput {
   margin: 10px;
   display: block;
-  width: 200px;
+  width: 500px;
+  font-size: large;
 }
 
 .subchild {
   display: flex;
+  width: 20%;
+  margin-bottom: 20px;
 }
 
 .label {
   margin-top: 10px;
+  font-size: large;
 }
 
-button {
+.btns button {
+  height: 50px;
+  width: 100px;
+  border-radius: 10%;
   margin: 10px;
+  font-size: 14px;
+  cursor: grab;
+}
+
+.btns {
+  float: right;
+  width: 25%;
+  display: grid;
+  right: 356px;
+  position: absolute;
 }
 
 .preview {
-  margin: 10px;
-  float: right;
+  float: left;
+  pointer-events: none;
+  width: 50%;
+  margin-right: 30px;
+  margin-top: -48px;
+  transform: scale(0.8);
 }
